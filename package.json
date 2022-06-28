@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "graphql-breaking-changes",
+  "version": "0.0.0",
+  "author": {
+    "name": "Kamil Kisiela",
+    "email": "kamil.kisiela@gmail.com",
+    "url": "https://github.com/kamilkisiela"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilkisiela/graphql-breaking-changes"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@graphql-tools/mock": "^8.7.0",
+    "@types/jest": "^28.1.3",
+    "graphql": "^16.5.0",
+    "jest": "^28.1.1",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
+  }
+}
