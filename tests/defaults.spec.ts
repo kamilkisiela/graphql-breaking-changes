@@ -28,7 +28,6 @@ test("safe: adding a default value to existing non-nullable argument", async () 
   expect(after.errors).not.toBeDefined();
 });
 
-
 test("safe: adding a new non-nullable argument with default value", async () => {
   const query = gql`
     {
@@ -85,8 +84,6 @@ test("breaking: removing a default value from an non-nullable argument", async (
   expect(after.errors).toBeDefined();
 });
 
-
-
 //
 
 test("safe: adding a default value to existing nullable argument", async () => {
@@ -116,7 +113,6 @@ test("safe: adding a default value to existing nullable argument", async () => {
   expect(before.errors).not.toBeDefined();
   expect(after.errors).not.toBeDefined();
 });
-
 
 test("safe: adding a new nullable argument with default value", async () => {
   const query = gql`
