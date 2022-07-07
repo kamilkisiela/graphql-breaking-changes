@@ -15,13 +15,19 @@
   "scripts": {
     "test": "jest",
     "format": "prettier --write 'tests/**/*.ts'",
-    "format:check": "prettier --check 'tests/**/*.ts'"
+    "format:check": "prettier --check 'tests/**/*.ts'",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.ts": "prettier --write"
   },
   "devDependencies": {
     "@graphql-tools/mock": "^8.7.0",
     "@types/jest": "^28.1.3",
     "graphql": "^16.5.0",
+    "husky": "^8.0.1",
     "jest": "^28.1.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.4"

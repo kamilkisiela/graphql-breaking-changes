@@ -1,5 +1,13 @@
-import { buildASTSchema, parse, execute, DocumentNode } from "graphql";
+import { buildASTSchema, parse, executeSync, DocumentNode } from "graphql";
 import { addMocksToSchema } from "@graphql-tools/mock";
+
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toBeSafe(): R;
+    }
+  }
+}
 
 export function gql(literals: string | readonly string[]) {
   if (typeof literals === "string") {
@@ -13,7 +21,41 @@ function buildMockSchema(schema: DocumentNode) {
   return addMocksToSchema({ schema: buildASTSchema(schema) });
 }
 
-export async function executeQuery({
+expect.extend({
+  toBeSafe(received: {
+    before: DocumentNode;
+    after: DocumentNode;
+    query: DocumentNode;
+    variables?: { [key: string]: any };
+  }) {
+    const before = executeQuery({
+      schema: received.before,
+      query: received.query,
+      variables: received.variables,
+    });
+    const after = executeQuery({
+      schema: received.after,
+      query: received.query,
+      variables: received.variables,
+    });
+
+    const pass = !Array.isArray(before.errors) && !Array.isArray(after.errors);
+
+    if (pass) {
+      return {
+        message: () => `expected to be breaking, but it was safe`,
+        pass: true,
+      };
+    }
+
+    return {
+      message: () => `expected to be safe, but it was breaking`,
+      pass: false,
+    };
+  },
+});
+
+export function executeQuery({
   query,
   schema,
   variables,
@@ -22,7 +64,7 @@ export async function executeQuery({
   query: DocumentNode;
   variables?: { [key: string]: any };
 }) {
-  return execute({
+  return executeSync({
     schema: buildMockSchema(schema),
     document: query,
     variableValues: variables,
