@@ -35,7 +35,7 @@ expect.extend({
       variables: received.variables,
     });
 
-    const pass = !Array.isArray(before.errors) && !Array.isArray(after.errors);
+    const pass = !Array.isArray(before.errors) && this.equals(before, after);
 
     if (pass) {
       return {
