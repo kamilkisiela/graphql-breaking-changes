@@ -17,10 +17,6 @@ export function gql(literals: string | readonly string[]) {
   return parse(literals[0]);
 }
 
-function buildMockSchema(schema: DocumentNode) {
-  return addMocksToSchema({ schema: buildASTSchema(schema) });
-}
-
 expect.extend({
   toBeSafe(received: {
     before: DocumentNode;
@@ -55,7 +51,11 @@ expect.extend({
   },
 });
 
-export function executeQuery({
+function buildMockSchema(schema: DocumentNode) {
+  return addMocksToSchema({ schema: buildASTSchema(schema) });
+}
+
+function executeQuery({
   query,
   schema,
   variables,

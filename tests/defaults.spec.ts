@@ -1,4 +1,4 @@
-import { executeQuery, gql } from "./testkit";
+import { gql } from "./testkit";
 
 test("safe: adding a default value to existing non-nullable argument", () => {
   expect({
