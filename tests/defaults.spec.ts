@@ -119,3 +119,26 @@ test("safe: removing a default value from an nullable argument", () => {
     `,
   }).toBeSafe();
 });
+
+test("safe: making an argument non-nullable for non-nullable operation argument definition", () => {
+  expect({
+    before: gql`
+      type Query {
+        words(len: Int): [String]
+      }
+    `,
+    after: gql`
+      type Query {
+        words(len: Int!): [String]
+      }
+    `,
+    query: gql`
+      query a($len: Int!) {
+        words(len: $len)
+      }
+    `,
+    variables: {
+      len: 1,
+    },
+  }).toBeSafe();
+});
