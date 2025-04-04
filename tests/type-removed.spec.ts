@@ -1,13 +1,10 @@
-/**
- * Renaming means changing the name but keeping the exact same shape.
- */
-
 import { gql } from "./testkit";
 
-test("safe: renaming object type and __typename is not selected", () => {
+test("safe: type removed and is not selected", () => {
   expect({
     before: gql`
       type Query {
+        foo: String
         user: User
       }
 
@@ -17,27 +14,22 @@ test("safe: renaming object type and __typename is not selected", () => {
     `,
     after: gql`
       type Query {
-        user: NewUser
-      }
-
-      type NewUser {
-        name: String
+        foo: String
       }
     `,
     query: gql`
       {
-        user {
-          name
-        }
+        foo
       }
     `,
   }).toBeSafe();
 });
 
-test("breaking: renaming object type and __typename is selected", () => {
+test("breaking: type removed and is selected", () => {
   expect({
     before: gql`
       type Query {
+        foo: String
         user: User
       }
 
@@ -47,17 +39,12 @@ test("breaking: renaming object type and __typename is selected", () => {
     `,
     after: gql`
       type Query {
-        user: NewUser
-      }
-
-      type NewUser {
-        name: String
+        foo: String
       }
     `,
     query: gql`
       {
         user {
-          __typename
           name
         }
       }
